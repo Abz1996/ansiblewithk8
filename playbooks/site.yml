@@ -1,0 +1,8 @@
+---
+- name: Deploy Kubernetes Cluster on Bare Metal
+  import_playbook: prerequisites.yml
+
+- name: Install Kubernetes
+  import_playbook: install_kubernetes.yml
+
+#

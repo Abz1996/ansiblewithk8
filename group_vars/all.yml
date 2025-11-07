@@ -1,0 +1,17 @@
+---
+# System Configuration
+timezone: "UTC"
+swap_disable: true
+
+# Network Configuration
+pod_network_cidr: "10.244.0.0/16"
+service_cidr: "10.96.0.0/12"
+
+# Kubernetes Version
+kubernetes_version: "1.28"
+kubernetes_version_full: "1.28.0-1.1"
+
+# Container Runtime
+container_runtime: containerd
+
+

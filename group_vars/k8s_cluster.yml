@@ -1,0 +1,9 @@
+---
+# Kubernetes Cluster Configuration
+cluster_name: "kubernetes-cluster"
+control_plane_endpoint: "45.33.93.201:6443"
+
+# CNI Plugin
+cni_plugin: "calico"
+calico_version: "v3.26.1"
+

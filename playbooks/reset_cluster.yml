@@ -1,0 +1,30 @@
+---
+- name: Reset Kubernetes Cluster
+  hosts: k8s_cluster
+  tasks:
+    - name: Reset kubeadm
+      command: kubeadm reset -f
+      ignore_errors: yes
+
+    - name: Remove kubernetes directories
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/kubernetes
+        - /var/lib/kubelet
+        - /var/lib/etcd
+        - /root/.kube
+
+    - name: Remove CNI directories
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/cni/net.d
+        - /opt/cni/bin
+
+    - name: Restart containerd
+      systemd:
+        name: containerd
+        state: restarted
