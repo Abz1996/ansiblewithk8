@@ -1,6 +1,14 @@
 ---
 - name: Configure prerequisites for all nodes
   hosts: k8s_cluster
+  vars:
+    swap_disable: true
+    pod_network_cidr: "10.244.0.0/16"
+    service_cidr: "10.96.0.0/12"
+    kubernetes_version: "1.28"
+    kubernetes_version_full: "1.28.0-1.1"
+    cni_plugin: "calico"
+    calico_version: "v3.26.1"
   tasks:
     - name: Update apt cache
       apt:
@@ -102,3 +110,5 @@
             state: restarted
             enabled: yes
             daemon_reload: yes
+
+# =============================================================================

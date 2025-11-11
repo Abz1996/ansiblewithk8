@@ -1,6 +1,14 @@
 ---
 - name: Install Kubernetes components
   hosts: k8s_cluster
+  vars:
+    kubernetes_version: "1.28"
+    kubernetes_version_full: "1.28.0-1.1"
+    pod_network_cidr: "10.244.0.0/16"
+    service_cidr: "10.96.0.0/12"
+    control_plane_endpoint: "45.33.93.201:6443"
+    cni_plugin: "calico"
+    calico_version: "v3.26.1"
   tasks:
     - name: Create keyrings directory
       file:
@@ -40,6 +48,12 @@
 
 - name: Initialize Kubernetes master node
   hosts: master
+  vars:
+    pod_network_cidr: "10.244.0.0/16"
+    service_cidr: "10.96.0.0/12"
+    control_plane_endpoint: "45.33.93.201:6443"
+    cni_plugin: "calico"
+    calico_version: "v3.26.1"
   tasks:
     - name: Check if cluster is already initialized
       stat:
@@ -96,6 +110,8 @@
 
 - name: Join worker nodes to cluster
   hosts: workers
+  vars:
+    # No specific vars needed for workers
   tasks:
     - name: Check if node is already joined
       stat:
@@ -120,6 +136,8 @@
 
 - name: Verify cluster status
   hosts: master
+  vars:
+    # No specific vars needed
   tasks:
     - name: Get cluster nodes
       command: kubectl get nodes
@@ -136,4 +154,3 @@
     - name: Display all pods
       debug:
         msg: "{{ pods_output.stdout_lines }}"
-
